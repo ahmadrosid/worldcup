@@ -45,10 +45,10 @@ export default function Home() {
           <div className='max-w-[650px] mx-auto my-8'>
             <div className='border border-dashed border-gray-500 p-4 sm:p-6 rounded-lg shadow-sm'>
               <div className="relative w-full flex gap-2">
-                <h2 className='opacity-75 text-xl w-full'>{hasLiveMatch ? "Live match" : "Last Match - " + dayjs(lastMatch.datetime).fromNow()}</h2>
+                <h2 className='opacity-75 text-xl w-full'>{hasLiveMatch ? (<span className='text-emerald-400'>Live match</span>) : "Last Match - " + dayjs(lastMatch.datetime).fromNow()}</h2>
                 {hasLiveMatch && (<span className="flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75"></span>
-                  <span className="relative inline-block rounded-full h-3 w-3 bg-red-500"></span>
+                  <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-block rounded-full h-3 w-3 bg-emerald-500"></span>
                 </span>)}
               </div>
               <div className='flex gap-4 pt-4 items-center justify-between'>
