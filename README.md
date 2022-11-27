@@ -1,6 +1,9 @@
-# Next.js + Tailwindcss boilerplate
+# FIFA Worldcup - Match updates
 
-Quickly start new project with basic tailwindcss setup.
+Stay updated with FIFA world cup QATAR 2022
 
-## Sample page
-![demo](/demo-app.png)
+## Application
+![demo](./demo.png)
+
+
+Data from [worldcupjson.net](https://worldcupjson.net/).
