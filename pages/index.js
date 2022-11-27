@@ -32,6 +32,7 @@ export default function Home() {
       <Head>
         <title>FIFA World Cup QATAR - 2022</title>
         <link rel='icon' href="/favicon.svg" type="image/svg" />
+        <script defer data-domain="worldcup-update.vercel.app" src="https://plausible.io/js/script.js"></script>
       </Head>
       <div option={5} className="bg-black min-h-screen h-full p-8 sm:p-16">
         <div>
@@ -80,7 +81,7 @@ export default function Home() {
                     <div className='pt-[4px]'>
                       <span className="block w-[9px] h-[9px] rounded-full bg-amber-400 opacity-75"></span>
                       <div className='h-full py-[8px] px-[4px]'>
-                        <span className='block w-[2px] bg-red-100 h-full opacity-60'></span>
+                        <span className='block w-[2px] bg-amber-50 h-full opacity-60'></span>
                       </div>
                     </div>
                     <div className='w-full'>
@@ -109,7 +110,7 @@ export default function Home() {
                     <div className='pt-[4px]'>
                       <span className="block w-[9px] h-[9px] rounded-full bg-amber-400 opacity-75"></span>
                       <div className='h-full py-[8px] px-[4px]'>
-                        <span className='block w-[2px] bg-red-100 h-full opacity-60'></span>
+                        <span className='block w-[2px] bg-amber-50 h-full opacity-60'></span>
                       </div>
                     </div>
                     <div className='w-full'>
