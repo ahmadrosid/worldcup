@@ -33,8 +33,6 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>FIFA World Cup QATAR - 2022</title>
-        <link rel='icon' href="/favicon.svg" type="image/svg" />
         <script defer data-domain="worldcup-update.vercel.app" src="https://plausible.io/js/script.js"></script>
       </Head>
       <div option={5} className="bg-black min-h-screen h-full p-8 sm:p-16">
