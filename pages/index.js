@@ -33,15 +33,15 @@ export default function Home() {
         <title>FIFA World Cup QATAR - 2022</title>
         <link rel='icon' href="/favicon.svg" type="image/svg" />
       </Head>
-      <div option={5} className="bg-black min-h-screen h-full p-16">
+      <div option={5} className="bg-black min-h-screen h-full p-8 xs:p-16">
         <div>
           <div className='text-center my-4'>
-            <h1 className='text-6xl font-bold text-gray-100'>FIFA World Cup</h1>
+            <h1 className='text-5xl xs:text-6xl font-bold text-gray-100'>FIFA World Cup</h1>
             <p className='py-2 font-light text-lg'>Stay updated with FIFA world cup QATAR 2022</p>
             <p>made by <a className='text-amber-500' href="https://ahmadrosid.com">@ahmadrosid</a></p>
           </div>
           <div className='max-w-[650px] mx-auto my-8'>
-            <div className='border border-dashed border-gray-500 p-6 rounded-lg shadow-sm'>
+            <div className='border border-dashed border-gray-500 p-4 xs:p-6 rounded-lg shadow-sm'>
               <div className="relative w-full flex gap-2">
                 <h2 className='opacity-75 text-xl w-full'>{hasLiveMatch ? "Live match" : "Last Match"}</h2>
                 {hasLiveMatch && (<span className="flex h-3 w-3">
@@ -55,7 +55,7 @@ export default function Home() {
                   <h3 className='text-center text-slate-200 opacity-75'>{lastMatch.home_team.name}</h3>
                 </div>
                 <div className='text-center'>
-                  <h2 className='text-4xl font-bold text-slate-200 opacity-75'>
+                  <h2 className='text-xl xs:text-4xl font-bold text-slate-200 opacity-75'>
                     {lastMatch.home_team.goals} : {lastMatch.away_team.goals}
                   </h2>
                   {hasLiveMatch ? <CountdownTimer targetDate={dayjs(lastMatch.datetime)} /> : (
