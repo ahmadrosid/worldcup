@@ -1,22 +1,29 @@
 import useSWR from 'swr'
 import Head from 'next/head'
 import dayjs from 'dayjs';
-var relativeTime = require('dayjs/plugin/relativeTime')
 import { useCountdown } from '../hooks/useCountdown';
+import { useState } from 'react';
+
+var relativeTime = require('dayjs/plugin/relativeTime')
+var isToday = require('dayjs/plugin/isToday')
+var isTomorrow = require('dayjs/plugin/isTomorrow')
 
 dayjs.extend(relativeTime)
+dayjs.extend(isToday)
+dayjs.extend(isTomorrow)
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 const CountdownTimer = ({ targetDate }) => {
-  const [days, hours, minutes,seconds ] = useCountdown(targetDate);
+  const [days, hours, minutes, seconds] = useCountdown(targetDate);
   return (
-    <p className='text-sm sm:text-3xl opacity-75'>{ minutes }:{ seconds }</p>
+    <p className='text-sm sm:text-3xl opacity-75'>{minutes}:{seconds}</p>
   );
 };
 
 
 export default function Home() {
+  const [sliceComplete, setSliceComplete] = useState(4);
   const imgUrlPrefix = "https://api.fifa.com/api/v3/picture/flags-sq-3/"
 
   const { data, error } = useSWR('https://worldcupjson.net/matches/?by_date=ASC', fetcher)
@@ -43,7 +50,7 @@ export default function Home() {
             <p>made by <a className='text-amber-500' href="https://ahmadrosid.com">@ahmadrosid</a></p>
           </div>
           <div className='max-w-[650px] mx-auto my-8'>
-            <div className='border border-dashed border-gray-500 p-4 sm:p-6 rounded-lg shadow-sm'>
+            <div className='border border-dashed border-gray-500 bg-[#85858536] p-4 sm:p-6 rounded-lg shadow-sm'>
               <div className="relative w-full flex gap-2">
                 <h2 className='opacity-75 text-xl w-full'>{hasLiveMatch ? <span className='text-emerald-400'>Live match</span> : "Last Match - " + dayjs(lastMatch.datetime).fromNow()}</h2>
                 {hasLiveMatch && <span className="flex h-3 w-3">
@@ -62,7 +69,7 @@ export default function Home() {
                   </h2>
                   {hasLiveMatch ? <CountdownTimer targetDate={dayjs(lastMatch.datetime)} /> : (
                     <p className='text-slate-200 opacity-75 font-light'>
-                    {dayjs(lastMatch.datetime).format("HH:MM A")}
+                      {dayjs(lastMatch.datetime).format("H:MM A")}
                     </p>
                   )}
                 </div>
@@ -76,26 +83,32 @@ export default function Home() {
           <div className='my-8 max-w-[650px] mx-auto'>
             <h2 className='text-4xl tracking-wide'>Next match</h2>
             <div className='py-4'>
-              <ul className='space-y-3'>
-                {nextMatch?.slice(0, 6).map(item => 
+              <ul className='space-y-2'>
+                {nextMatch?.slice(0, 3).map(item =>
                   <li className='flex gap-2' key={item.id}>
-                    <div className='pt-[4px]'>
+                    <div className='py-[4px]'>
                       <span className="block w-[9px] h-[9px] rounded-full bg-amber-400 opacity-75"></span>
                       <div className='h-full py-[8px] px-[4px]'>
-                        <span className='block w-[2px] bg-amber-50 h-full opacity-60'></span>
+                        <span className='block w-[2px] bg-gray-200 h-full opacity-60'></span>
                       </div>
                     </div>
                     <div className='w-full'>
-                      <p className='text-amber-500 text-xs'>{dayjs(item.datetime).format("MMMM DD")}</p>
-                      <div className='flex justify-between items-center w-full'>
-                        <h3 className='space-x-2 text-lg py-1 font-medium tracking-wide opacity-80'>
-                          <span>{item.home_team.name} vs {item.away_team.name}</span>
-                        </h3>
-                        <p className='text-gray-200 font-light opacity-60 text-sm'>
-                          {dayjs(item.datetime).format("HH:MM A")}
-                        </p>
+                      <p className='text-amber-500 text-sm w-full flex justify-between'>
+                        {dayjs(item.datetime).isToday() && <span>Today</span>}
+                        {dayjs(item.datetime).isTomorrow() && <span>Tomorrow</span>}
+                        <span className='text-amber-50 opacity-75'>{dayjs(item.datetime).format("MMM DD")}</span>
+                      </p>
+                      <div className='pb-2 pt-2'>
+                        <div className='flex justify-between items-center w-full'>
+                          <h3 className='space-x-2 text-lg py-0 font-medium tracking-wide opacity-80'>
+                            <span>{item.home_team.name} vs {item.away_team.name}</span>
+                          </h3>
+                          <p className='text-gray-200 font-light opacity-60 text-sm'>
+                            {dayjs(item.datetime).format("H:M A")}
+                          </p>
+                        </div>
+                        <p className='text-sm opacity-80'>Venue : <span className='text-sky-400'>{item.venue}, {item.location}</span></p>
                       </div>
-                      <p className='text-sm opacity-80'>Venue : <span className='text-sky-400'>{item.venue}, {item.location}</span></p>
                     </div>
                   </li>
                 )}
@@ -105,7 +118,7 @@ export default function Home() {
           <div className='my-8 max-w-[650px] mx-auto'>
             <h2 className='text-4xl tracking-wide'>Completed match</h2>
             <div className='py-4'>
-              <ul className='space-y-3'>
+              <ul className='space-y-3 transition-all'>
                 {completedMatch?.reverse().map(item =>
                   <li className='flex gap-2' key={item.id}>
                     <div className='pt-[4px]'>
@@ -115,7 +128,10 @@ export default function Home() {
                       </div>
                     </div>
                     <div className='w-full'>
-                      <p className='text-amber-500 text-xs'>{dayjs(item.datetime).format("MMMM DD")}</p>
+                      <p className='text-amber-500 text-sm w-full flex justify-between'>
+                        <span>{dayjs(item.datetime).fromNow()}</span>
+                        <span className='text-amber-50 opacity-75'>{dayjs(item.datetime).format("MMM DD")}</span>
+                      </p>
                       <div className='flex justify-between items-center w-full'>
                         <h3 className='space-x-2 text-lg pt-1 font-medium tracking-wide opacity-80'>
                           <span>{item.home_team.name} vs {item.away_team.name}</span>
@@ -126,12 +142,20 @@ export default function Home() {
                           {dayjs(item.datetime).format("HH:MM A")}
                         </p>
                       </div>
-                      <p className='text-sm opacity-75'>Winner : <span className='text-emerald-400'>{item.winner}</span></p>
-                      <p className='text-sm opacity-75'>{dayjs(item.datetime).fromNow()}</p>
+                      <p className='text-sm opacity-75'>
+                        <span>Result: </span>
+                        <span className='text-emerald-400'>{item.winner === "Draw" ? item.winner : item.winner + " Wins"}</span>
+                      </p>
                     </div>
                   </li>
-                )}
+                ).slice(0, sliceComplete)}
               </ul>
+              {sliceComplete === 4 && <div className='py-3 w-full flex justify-center'>
+                <button onClick={() => setSliceComplete(-1)} className='text-xs rounded-full border border-gray-400 px-8 py-2 cursor-pointer bg-[#85858536]'>Show more</button>
+              </div>}
+              {sliceComplete !== 4 && <div className='py-3 w-full flex justify-center'>
+                <button onClick={() => setSliceComplete(4)} className='text-xs rounded-full border border-gray-400 px-8 py-2 cursor-pointer bg-[#85858536]'>Show less</button>
+              </div>}
             </div>
           </div>
         </div>
