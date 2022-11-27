@@ -45,11 +45,11 @@ export default function Home() {
           <div className='max-w-[650px] mx-auto my-8'>
             <div className='border border-dashed border-gray-500 p-4 sm:p-6 rounded-lg shadow-sm'>
               <div className="relative w-full flex gap-2">
-                <h2 className='opacity-75 text-xl w-full'>{hasLiveMatch ? (<span className='text-emerald-400'>Live match</span>) : "Last Match - " + dayjs(lastMatch.datetime).fromNow()}</h2>
-                {hasLiveMatch && (<span className="flex h-3 w-3">
+                <h2 className='opacity-75 text-xl w-full'>{hasLiveMatch ? <span className='text-emerald-400'>Live match</span> : "Last Match - " + dayjs(lastMatch.datetime).fromNow()}</h2>
+                {hasLiveMatch && <span className="flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-block rounded-full h-3 w-3 bg-emerald-500"></span>
-                </span>)}
+                </span>}
               </div>
               <div className='flex gap-4 pt-4 items-center justify-between'>
                 <div className='space-y-2'>
@@ -77,7 +77,7 @@ export default function Home() {
             <h2 className='text-4xl tracking-wide'>Next match</h2>
             <div className='py-4'>
               <ul className='space-y-3'>
-                {nextMatch?.slice(0, 6).map(item => (
+                {nextMatch?.slice(0, 6).map(item => 
                   <li className='flex gap-2' key={item.id}>
                     <div className='pt-[4px]'>
                       <span className="block w-[9px] h-[9px] rounded-full bg-amber-400 opacity-75"></span>
@@ -98,7 +98,7 @@ export default function Home() {
                       <p className='text-sm opacity-80'>Venue : <span className='text-sky-400'>{item.venue}, {item.location}</span></p>
                     </div>
                   </li>
-                ))}
+                )}
               </ul>
             </div>
           </div>
@@ -106,7 +106,7 @@ export default function Home() {
             <h2 className='text-4xl tracking-wide'>Completed match</h2>
             <div className='py-4'>
               <ul className='space-y-3'>
-                {completedMatch?.reverse().map(item => (
+                {completedMatch?.reverse().map(item =>
                   <li className='flex gap-2' key={item.id}>
                     <div className='pt-[4px]'>
                       <span className="block w-[9px] h-[9px] rounded-full bg-amber-400 opacity-75"></span>
@@ -130,7 +130,7 @@ export default function Home() {
                       <p className='text-sm opacity-75'>{dayjs(item.datetime).fromNow()}</p>
                     </div>
                   </li>
-                ))}
+                )}
               </ul>
             </div>
           </div>
