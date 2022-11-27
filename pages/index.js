@@ -38,6 +38,7 @@ export default function Home() {
           <div className='text-center my-4'>
             <h1 className='text-6xl font-bold text-gray-100'>FIFA World Cup</h1>
             <p className='py-2 font-light text-lg'>Stay updated with FIFA world cup QATAR 2022</p>
+            <p>made by <a className='text-amber-500' href="https://ahmadrosid.com">@ahmadrosid</a></p>
           </div>
           <div className='max-w-[650px] mx-auto my-8'>
             <div className='border border-dashed border-gray-500 p-6 rounded-lg shadow-sm'>
