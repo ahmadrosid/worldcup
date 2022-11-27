@@ -1,0 +1,8 @@
+body {
+    font-feature-settings: "tnum";
+    font-variant: "tabular-nums";
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
