@@ -1,7 +1,10 @@
 import useSWR from 'swr'
 import Head from 'next/head'
 import dayjs from 'dayjs';
+var relativeTime = require('dayjs/plugin/relativeTime')
 import { useCountdown } from '../hooks/useCountdown';
+
+dayjs.extend(relativeTime)
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
@@ -44,7 +47,7 @@ export default function Home() {
           <div className='max-w-[650px] mx-auto my-8'>
             <div className='border border-dashed border-gray-500 p-4 sm:p-6 rounded-lg shadow-sm'>
               <div className="relative w-full flex gap-2">
-                <h2 className='opacity-75 text-xl w-full'>{hasLiveMatch ? "Live match" : "Last Match"}</h2>
+                <h2 className='opacity-75 text-xl w-full'>{hasLiveMatch ? "Live match" : "Last Match - " + dayjs(lastMatch.datetime).fromNow()}</h2>
                 {hasLiveMatch && (<span className="flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75"></span>
                   <span className="relative inline-block rounded-full h-3 w-3 bg-red-500"></span>
@@ -116,7 +119,7 @@ export default function Home() {
                     <div className='w-full'>
                       <p className='text-amber-500 text-xs'>{dayjs(item.datetime).format("MMMM DD")}</p>
                       <div className='flex justify-between items-center w-full'>
-                        <h3 className='space-x-2 text-lg py-1 font-medium tracking-wide opacity-80'>
+                        <h3 className='space-x-2 text-lg pt-1 font-medium tracking-wide opacity-80'>
                           <span>{item.home_team.name} vs {item.away_team.name}</span>
                           <span>-</span>
                           <span>{item.home_team.goals} : {item.away_team.goals}</span>
@@ -126,6 +129,7 @@ export default function Home() {
                         </p>
                       </div>
                       <p className='text-sm opacity-75'>Winner : <span className='text-emerald-400'>{item.winner}</span></p>
+                      <p className='text-sm opacity-75'>{dayjs(item.datetime).fromNow()}</p>
                     </div>
                   </li>
                 ))}
