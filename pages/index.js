@@ -35,7 +35,7 @@ export default function Home() {
   if (hasLiveMatch) lastMatch = in_progress_match[0];
 
   if (error) return <div>Failed to load</div>
-  if (!data) return <div>Loading...</div>
+  if (!data) return <div className='w-full min-h-screen h-full bg-black flex items-center justify-center text-white'>Loading...</div>
 
   return (
     <>
@@ -69,7 +69,7 @@ export default function Home() {
                   </h2>
                   {hasLiveMatch ? <CountdownTimer targetDate={dayjs(lastMatch.datetime)} /> : (
                     <p className='text-slate-200 opacity-75 font-light'>
-                      {dayjs(lastMatch.datetime).format("H:MM A")}
+                      {dayjs(lastMatch.datetime).format("h:m A")}
                     </p>
                   )}
                 </div>
@@ -104,7 +104,7 @@ export default function Home() {
                             <span>{item.home_team.name} vs {item.away_team.name}</span>
                           </h3>
                           <p className='text-gray-200 font-light opacity-60 text-sm'>
-                            {dayjs(item.datetime).format("H:M A")}
+                            {dayjs(item.datetime).format("h:m A")}
                           </p>
                         </div>
                         <p className='text-sm opacity-80'>Venue : <span className='text-sky-400'>{item.venue}, {item.location}</span></p>
@@ -139,7 +139,7 @@ export default function Home() {
                           <span>{item.home_team.goals} : {item.away_team.goals}</span>
                         </h3>
                         <p className='text-gray-200 font-light opacity-60 text-sm'>
-                          {dayjs(item.datetime).format("HH:MM A")}
+                          {dayjs(item.datetime).format("h:m A")}
                         </p>
                       </div>
                       <p className='text-sm opacity-75'>
