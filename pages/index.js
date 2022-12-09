@@ -34,7 +34,7 @@ export default function Home() {
   const hasLiveMatch = in_progress_match?.length >= 1;
   if (hasLiveMatch) lastMatch = in_progress_match[0];
 
-  if (error) return <div>Failed to load</div>
+  if (error) return <div className='w-full min-h-screen h-full bg-black flex items-center justify-center text-white'>Failed to load</div>
   if (!data) return <div className='w-full min-h-screen h-full bg-black flex items-center justify-center text-white'>Loading...</div>
 
   return (
