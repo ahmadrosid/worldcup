@@ -24,6 +24,7 @@ const CountdownTimer = ({ targetDate }) => {
 
 export default function Home() {
   const [sliceComplete, setSliceComplete] = useState(4);
+  const [sliceNextMatch, setSliceNextMatch] = useState(3);
   const imgUrlPrefix = "https://api.fifa.com/api/v3/picture/flags-sq-3/"
 
   const { data, error } = useSWR('https://worldcupjson.net/matches/?by_date=ASC', fetcher)
@@ -84,7 +85,7 @@ export default function Home() {
             <h2 className='text-4xl tracking-wide'>Next match</h2>
             <div className='py-4'>
               <ul className='space-y-2'>
-                {nextMatch?.slice(0, 3).map(item =>
+                {nextMatch?.slice(0, sliceNextMatch).map(item =>
                   <li className='flex gap-2' key={item.id}>
                     <div className='py-[4px]'>
                       <span className="block w-[9px] h-[9px] rounded-full bg-amber-400 opacity-75"></span>
@@ -113,6 +114,12 @@ export default function Home() {
                   </li>
                 )}
               </ul>
+              {sliceNextMatch === 3 && <div className='py-3 w-full flex justify-center'>
+                <button onClick={() => setSliceNextMatch(nextMatch?.length + 1)} className='text-xs rounded-full border border-gray-400 px-8 py-2 cursor-pointer bg-[#85858536]'>Show more</button>
+              </div>}
+              {sliceNextMatch !== 3 && <div className='py-3 w-full flex justify-center'>
+                <button onClick={() => setSliceNextMatch(3)} className='text-xs rounded-full border border-gray-400 px-8 py-2 cursor-pointer bg-[#85858536]'>Show less</button>
+              </div>}
             </div>
           </div>
           <div className='my-8 max-w-[650px] mx-auto'>
