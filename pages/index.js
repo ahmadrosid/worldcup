@@ -21,7 +21,6 @@ const CountdownTimer = ({ targetDate }) => {
   );
 };
 
-
 export default function Home() {
   const [sliceComplete, setSliceComplete] = useState(4);
   const [sliceNextMatch, setSliceNextMatch] = useState(3);
