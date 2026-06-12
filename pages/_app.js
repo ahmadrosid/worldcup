@@ -1,9 +1,11 @@
 import '../styles/globals.css'
 import Head from "next/head"
+import { ThemeProvider } from '../context/ThemeContext'
+import ThemeToggle from '../components/ThemeToggle'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <>
+    <ThemeProvider>
       <Head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -33,8 +35,9 @@ function MyApp({ Component, pageProps }) {
         <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"></link>
         <meta name="theme-color" content="#000000" />
       </Head>
+      <ThemeToggle />
       <Component {...pageProps} />
-    </>
+    </ThemeProvider>
   )
 }
 

@@ -12,9 +12,25 @@ class AppDocument extends Document {
         <Head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-          <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+          <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
         </Head>
         <body>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function () {
+                  try {
+                    var preference = localStorage.getItem('worldcup-theme');
+                    var dark;
+                    if (preference === 'light') dark = false;
+                    else if (preference === 'dark') dark = true;
+                    else dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    document.documentElement.classList.toggle('dark', dark);
+                  } catch (e) {}
+                })();
+              `,
+            }}
+          />
           <Main />
           <NextScript />
         </body>

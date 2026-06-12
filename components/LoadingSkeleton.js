@@ -1,5 +1,5 @@
 const Skeleton = ({ className = '' }) => (
-  <div className={`animate-pulse rounded bg-gray-700/60 ${className}`} aria-hidden="true" />
+  <div className={`animate-pulse rounded bg-gray-300/60 dark:bg-gray-700/60 ${className}`} aria-hidden="true" />
 );
 
 const TimelineItemSkeleton = () => (
@@ -26,7 +26,7 @@ const TimelineItemSkeleton = () => (
 
 export default function LoadingSkeleton() {
   return (
-    <div className="bg-black min-h-screen h-full p-8 sm:p-16">
+    <div className="bg-gray-50 dark:bg-black min-h-screen h-full p-8 sm:p-16">
       <div>
         <div className="text-center my-4 space-y-3">
           <Skeleton className="h-12 sm:h-14 w-72 max-w-full mx-auto" />
@@ -35,7 +35,7 @@ export default function LoadingSkeleton() {
         </div>
 
         <div className="max-w-[650px] mx-auto my-8">
-          <div className="border border-dashed border-gray-500 bg-[#85858536] p-4 sm:p-6 rounded-lg shadow-sm">
+          <div className="border border-dashed border-gray-300 dark:border-gray-500 bg-gray-100/80 dark:bg-[#85858536] p-4 sm:p-6 rounded-lg shadow-sm">
             <Skeleton className="h-6 w-40" />
             <div className="flex gap-4 pt-4 items-center justify-between">
               <div className="space-y-2 flex flex-col items-center">
