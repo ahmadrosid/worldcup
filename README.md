@@ -1,9 +1,11 @@
 # FIFA Worldcup - Match updates
 
-Stay updated with FIFA world cup QATAR 2022
+Stay updated with FIFA World Cup USA, Mexico & Canada 2026
+
+This project started for Qatar 2022 and is still working for the 2026 World Cup.
 
 ## Application
 ![demo](./demo.png)
 
 
-Data from [worldcupjson.net](https://worldcupjson.net/).
+Data from [worldcup26.ir API](https://worldcup26.ir/api-docs/).
