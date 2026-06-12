@@ -84,7 +84,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className='my-8 max-w-[650px] mx-auto'>
+          <div className='my-8 max-w-[650px] mx-auto px-3'>
             <h2 className='text-4xl tracking-wide'>Next match</h2>
             <div className='py-4'>
               {nextMatch?.length > 0 ? (
@@ -131,7 +131,7 @@ export default function Home() {
               )}
             </div>
           </div>
-          <div className='my-8 max-w-[650px] mx-auto'>
+          <div className='my-8 max-w-[650px] mx-auto px-3'>
             <h2 className='text-4xl tracking-wide'>Completed match</h2>
             <div className='py-4'>
               <ul className='space-y-3 transition-all'>
