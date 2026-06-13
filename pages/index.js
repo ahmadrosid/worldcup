@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import { useCountdown } from '../hooks/useCountdown';
 import { useState } from 'react';
 import LoadingSkeleton from '../components/LoadingSkeleton';
+import TeamFlag from '../components/TeamFlag';
 
 var relativeTime = require('dayjs/plugin/relativeTime')
 var isToday = require('dayjs/plugin/isToday')
@@ -15,6 +16,13 @@ dayjs.extend(isTomorrow)
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
+function getMatchDateLabel(datetime) {
+  const date = dayjs(datetime)
+  if (date.isToday()) return 'Today'
+  if (date.isTomorrow()) return 'Tomorrow'
+  return date.format('ddd, MMM D')
+}
+
 const CountdownTimer = ({ targetDate }) => {
   const [days, hours, minutes, seconds] = useCountdown(targetDate);
   return (
@@ -25,7 +33,6 @@ const CountdownTimer = ({ targetDate }) => {
 export default function Home() {
   const [sliceComplete, setSliceComplete] = useState(4);
   const [sliceNextMatch, setSliceNextMatch] = useState(3);
-  const imgUrlPrefix = "https://api.fifa.com/api/v3/picture/flags-sq-3/"
 
   const { data, error } = useSWR('/api/matches', fetcher)
   const completedMatch = data?.filter(item => item.status == "completed");
@@ -46,7 +53,7 @@ export default function Home() {
         src="https://plausible.io/js/script.js"
         strategy="afterInteractive"
       />
-      <div option={5} className="bg-gray-50 text-gray-900 dark:bg-black dark:text-gray-100 min-h-screen h-full p-8 sm:p-16">
+      <div option={5} className="bg-gray-50 text-gray-900 dark:bg-black dark:text-gray-100 min-h-screen h-full px-4 py-8 sm:p-16">
         <div>
           <div className='text-center my-4'>
             <h1 className='text-5xl xs:text-6xl font-bold text-gray-900 dark:text-gray-100'>FIFA World Cup</h1>
@@ -64,7 +71,7 @@ export default function Home() {
               </div>
               <div className='flex gap-4 pt-4 items-center justify-between'>
                 <div className='space-y-2'>
-                  <img alt={lastMatch.home_team.name} src={imgUrlPrefix + lastMatch.home_team.country} className="rounded-md border" />
+                  <TeamFlag name={lastMatch.home_team.name} country={lastMatch.home_team.country} className="h-12 w-16 sm:h-16 sm:w-20" />
                   <h3 className='text-center text-gray-700 dark:text-slate-200 opacity-75'>{lastMatch.home_team.name}</h3>
                 </div>
                 <div className='text-center'>
@@ -78,42 +85,50 @@ export default function Home() {
                   )}
                 </div>
                 <div className='space-y-2 '>
-                  <img alt={lastMatch.away_team.name} src={imgUrlPrefix + lastMatch.away_team.country} className="rounded-md border" />
+                  <TeamFlag name={lastMatch.away_team.name} country={lastMatch.away_team.country} className="h-12 w-16 sm:h-16 sm:w-20" />
                   <h3 className='text-center font-base text-gray-700 dark:text-slate-200 opacity-75'>{lastMatch.away_team.name}</h3>
                 </div>
               </div>
             </div>
           </div>
-          <div className='my-8 max-w-[650px] mx-auto px-3'>
+          <div className='my-8 max-w-[650px] mx-auto'>
             <h2 className='text-4xl tracking-wide'>Next match</h2>
             <div className='py-4'>
               {nextMatch?.length > 0 ? (
               <>
-              <ul className='space-y-2'>
+              <ul className='space-y-3'>
                 {nextMatch?.slice(0, sliceNextMatch).map(item =>
-                  <li className='flex gap-2' key={item.id}>
-                    <div className='py-[4px]'>
-                      <span className="block w-[9px] h-[9px] rounded-full bg-amber-600 dark:bg-amber-400 opacity-75"></span>
-                      <div className='h-full py-[8px] px-[4px]'>
-                        <span className='block w-[2px] bg-gray-400 dark:bg-gray-200 h-full opacity-60'></span>
+                  <li
+                    key={item.id}
+                    className='rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-100/60 dark:bg-[#85858520] p-4'
+                  >
+                    <p className='text-center text-sm text-amber-700 dark:text-amber-400'>
+                      {getMatchDateLabel(item.datetime)} · {dayjs(item.datetime).format('h:mm A')}
+                    </p>
+                    <p className='mt-1 text-center text-xs text-gray-500 dark:text-gray-400'>
+                      {item.venue}, {item.location}
+                    </p>
+                    <div className='flex items-center justify-between gap-2 sm:gap-4 mt-4'>
+                      <div className='flex flex-col items-center gap-2 flex-1 min-w-0'>
+                        <TeamFlag
+                          name={item.home_team.name}
+                          country={item.home_team.country}
+                          className="h-10 w-14 sm:h-12 sm:w-16"
+                        />
+                        <span className='text-sm sm:text-base font-semibold text-gray-900 dark:text-gray-100 text-center leading-tight'>
+                          {item.home_team.name}
+                        </span>
                       </div>
-                    </div>
-                    <div className='w-full'>
-                      <p className='text-amber-700 dark:text-amber-500 text-sm w-full flex justify-between'>
-                        {dayjs(item.datetime).isToday() && <span>Today</span>}
-                        {dayjs(item.datetime).isTomorrow() && <span>Tomorrow</span>}
-                        <span className='text-amber-700 dark:text-amber-50 opacity-75'>{dayjs(item.datetime).format("MMM DD")}</span>
-                      </p>
-                      <div className='pb-2 pt-2'>
-                        <div className='flex justify-between items-center w-full'>
-                          <h3 className='space-x-2 text-lg py-0 font-medium tracking-wide opacity-80'>
-                            <span>{item.home_team.name} vs {item.away_team.name}</span>
-                          </h3>
-                          <p className='text-gray-600 dark:text-gray-200 font-light opacity-60 text-sm'>
-                            {dayjs(item.datetime).format("h:m A")}
-                          </p>
-                        </div>
-                        <p className='text-sm opacity-80 text-gray-700 dark:text-gray-300'>Venue : <span className='text-sky-600 dark:text-sky-400'>{item.venue}, {item.location}</span></p>
+                      <span className='text-xs font-medium text-gray-400 dark:text-gray-500 shrink-0'>vs</span>
+                      <div className='flex flex-col items-center gap-2 flex-1 min-w-0'>
+                        <TeamFlag
+                          name={item.away_team.name}
+                          country={item.away_team.country}
+                          className="h-10 w-14 sm:h-12 sm:w-16"
+                        />
+                        <span className='text-sm sm:text-base font-semibold text-gray-900 dark:text-gray-100 text-center leading-tight'>
+                          {item.away_team.name}
+                        </span>
                       </div>
                     </div>
                   </li>
@@ -131,7 +146,7 @@ export default function Home() {
               )}
             </div>
           </div>
-          <div className='my-8 max-w-[650px] mx-auto px-3'>
+          <div className='my-8 max-w-[650px] mx-auto'>
             <h2 className='text-4xl tracking-wide'>Completed match</h2>
             <div className='py-4'>
               <ul className='space-y-3 transition-all'>

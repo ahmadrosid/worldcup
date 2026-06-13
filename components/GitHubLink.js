@@ -1,5 +1,5 @@
 const linkClass =
-  'flex items-center gap-1 rounded-full border border-gray-300/80 bg-white/90 px-2.5 py-1 text-xs font-medium text-gray-700 shadow-none backdrop-blur transition hover:bg-gray-100 dark:border-gray-600/80 dark:bg-black/90 dark:text-gray-200 dark:hover:bg-gray-800'
+  'flex items-center justify-center rounded-full border border-gray-300/80 bg-white/90 p-2 text-gray-700 shadow-none backdrop-blur transition hover:bg-gray-100 dark:border-gray-600/80 dark:bg-black/90 dark:text-gray-200 dark:hover:bg-gray-800'
 
 export default function GitHubLink() {
   return (
@@ -14,7 +14,7 @@ export default function GitHubLink() {
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="currentColor"
-        className="h-3.5 w-3.5"
+        className="h-4 w-4"
         aria-hidden="true"
       >
         <path
@@ -23,7 +23,6 @@ export default function GitHubLink() {
           clipRule="evenodd"
         />
       </svg>
-      GitHub
     </a>
   )
 }

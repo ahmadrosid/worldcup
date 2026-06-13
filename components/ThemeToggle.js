@@ -8,7 +8,31 @@ const OPTIONS = [
 ]
 
 const triggerClass =
-  'flex items-center gap-1 rounded-full border border-gray-300/80 bg-white/90 px-2.5 py-1 text-xs font-medium text-gray-700 shadow-none backdrop-blur transition hover:bg-gray-100 dark:border-gray-600/80 dark:bg-black/90 dark:text-gray-200 dark:hover:bg-gray-800'
+  'flex items-center justify-center rounded-full border border-gray-300/80 bg-white/90 p-2 text-gray-700 shadow-none backdrop-blur transition hover:bg-gray-100 dark:border-gray-600/80 dark:bg-black/90 dark:text-gray-200 dark:hover:bg-gray-800'
+
+function ThemeIcon({ theme }) {
+  if (theme === 'light') {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+        <path fillRule="evenodd" d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" clipRule="evenodd" />
+      </svg>
+    )
+  }
+
+  if (theme === 'dark') {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+        <path fillRule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" clipRule="evenodd" />
+      </svg>
+    )
+  }
+
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+      <path fillRule="evenodd" d="M2.25 5.25a3 3 0 013-3h13.5a3 3 0 013 3v7.5a3 3 0 01-3 3H5.25a3 3 0 01-3-3v-7.5zM5.25 4.5a.75.75 0 00-.75.75v7.5c0 .414.336.75.75.75h13.5a.75.75 0 00.75-.75v-7.5a.75.75 0 00-.75-.75H5.25zM3 12.75A.75.75 0 013.75 12h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75zm.25 3.75a.75.75 0 00-.75.75v.75c0 .414.336.75.75.75h18.5a.75.75 0 00.75-.75v-.75a.75.75 0 00-.75-.75H3.5z" clipRule="evenodd" />
+    </svg>
+  )
+}
 
 export default function ThemeToggle() {
   const { theme, setTheme, mounted } = useTheme()
@@ -42,7 +66,7 @@ export default function ThemeToggle() {
     return (
       <div className="fixed top-4 right-4 z-50">
         <button type="button" aria-label="Theme" className={triggerClass}>
-          <span className="opacity-0">Auto</span>
+          <span className="h-4 w-4 opacity-0" aria-hidden="true" />
         </button>
       </div>
     )
@@ -53,28 +77,19 @@ export default function ThemeToggle() {
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        aria-label="Theme"
+        aria-label={`Theme: ${activeLabel}`}
         aria-haspopup="menu"
         aria-expanded={open}
         className={triggerClass}
       >
-        {activeLabel}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className={`h-3 w-3 opacity-60 transition-transform ${open ? 'rotate-180' : ''}`}
-          aria-hidden="true"
-        >
-          <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
-        </svg>
+        <ThemeIcon theme={theme} />
       </button>
 
       {open && (
         <div
           role="menu"
           aria-label="Theme options"
-          className="absolute right-0 mt-1 min-w-full rounded-lg border border-gray-200 bg-white py-0.5 text-xs shadow-lg dark:border-gray-700 dark:bg-gray-900"
+          className="absolute right-0 mt-1 min-w-[5.5rem] rounded-lg border border-gray-200 bg-white py-0.5 text-xs shadow-lg dark:border-gray-700 dark:bg-gray-900"
         >
           {OPTIONS.map((option) => (
             <button

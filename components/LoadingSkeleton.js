@@ -2,6 +2,24 @@ const Skeleton = ({ className = '' }) => (
   <div className={`animate-pulse rounded bg-gray-300/60 dark:bg-gray-700/60 ${className}`} aria-hidden="true" />
 );
 
+const NextMatchCardSkeleton = () => (
+  <li className="rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-100/60 dark:bg-[#85858520] p-4">
+    <Skeleton className="h-4 w-36 mx-auto" />
+    <Skeleton className="h-3 w-56 max-w-full mx-auto mt-2" />
+    <div className="flex items-center justify-between gap-4 mt-4">
+      <div className="flex flex-col items-center gap-2 flex-1">
+        <Skeleton className="h-10 w-14 sm:h-12 sm:w-16 rounded-md" />
+        <Skeleton className="h-4 w-20" />
+      </div>
+      <Skeleton className="h-3 w-6 rounded-full" />
+      <div className="flex flex-col items-center gap-2 flex-1">
+        <Skeleton className="h-10 w-14 sm:h-12 sm:w-16 rounded-md" />
+        <Skeleton className="h-4 w-24" />
+      </div>
+    </div>
+  </li>
+);
+
 const TimelineItemSkeleton = () => (
   <li className="flex gap-2">
     <div className="py-[4px]">
@@ -26,7 +44,7 @@ const TimelineItemSkeleton = () => (
 
 export default function LoadingSkeleton() {
   return (
-    <div className="bg-gray-50 dark:bg-black min-h-screen h-full p-8 sm:p-16">
+    <div className="bg-gray-50 dark:bg-black min-h-screen h-full px-4 py-8 sm:p-16">
       <div>
         <div className="text-center my-4 space-y-3">
           <Skeleton className="h-12 sm:h-14 w-72 max-w-full mx-auto" />
@@ -56,9 +74,9 @@ export default function LoadingSkeleton() {
 
         <div className="my-8 max-w-[650px] mx-auto">
           <Skeleton className="h-10 w-44" />
-          <ul className="py-4 space-y-2">
+          <ul className="py-4 space-y-3">
             {Array.from({ length: 3 }).map((_, index) => (
-              <TimelineItemSkeleton key={`next-${index}`} />
+              <NextMatchCardSkeleton key={`next-${index}`} />
             ))}
           </ul>
         </div>
