@@ -23,6 +23,12 @@ function getMatchDateLabel(datetime) {
   return date.format('ddd, MMM D')
 }
 
+function getTeamResultClass(teamName, winner) {
+  if (winner === 'Draw') return 'opacity-80'
+  if (teamName === winner) return 'font-semibold text-emerald-600 dark:text-emerald-400'
+  return 'opacity-50'
+}
+
 const CountdownTimer = ({ targetDate }) => {
   const [days, hours, minutes, seconds] = useCountdown(targetDate);
   return (
@@ -164,10 +170,24 @@ export default function Home() {
                         <span className='text-amber-700 dark:text-amber-50 opacity-75'>{dayjs(item.datetime).format("MMM DD")}</span>
                       </p>
                       <div className='flex justify-between items-center w-full'>
-                        <h3 className='space-x-2 text-lg pt-1 font-medium tracking-wide opacity-80'>
-                          <span>{item.home_team.name} vs {item.away_team.name}</span>
-                          <span>-</span>
-                          <span>{item.home_team.goals} : {item.away_team.goals}</span>
+                        <h3 className='space-x-2 text-lg pt-1 font-medium tracking-wide'>
+                          <span className={getTeamResultClass(item.home_team.name, item.winner)}>
+                            {item.home_team.name}
+                          </span>
+                          <span className='opacity-50'>vs</span>
+                          <span className={getTeamResultClass(item.away_team.name, item.winner)}>
+                            {item.away_team.name}
+                          </span>
+                          <span className='opacity-50'>-</span>
+                          <span>
+                            <span className={getTeamResultClass(item.home_team.name, item.winner)}>
+                              {item.home_team.goals}
+                            </span>
+                            <span className='opacity-50'> : </span>
+                            <span className={getTeamResultClass(item.away_team.name, item.winner)}>
+                              {item.away_team.goals}
+                            </span>
+                          </span>
                         </h3>
                         <p className='text-gray-600 dark:text-gray-200 font-light opacity-60 text-sm'>
                           {dayjs(item.datetime).format("h:m A")}
